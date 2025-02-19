@@ -1,0 +1,75 @@
+import java.util.*;
+
+class Card {
+    private String name;
+    private String symbol;
+
+    public Card(String name, String symbol) {
+        this.name = name;
+        this.symbol = symbol;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{name='" + name + "', symbol='" + symbol + "'}";
+    }
+}
+
+public class CardCollection {
+    private Collection<Card> cards;
+
+    public CardCollection() {
+        cards = new HashSet<>();
+    }
+
+    public void addCard(String name, String symbol) {
+        cards.add(new Card(name, symbol));
+    }
+
+    public List<Card> findCardsBySymbol(String symbol) {
+        List<Card> result = new ArrayList<>();
+        for (Card card : cards) {
+            if (card.getSymbol().equalsIgnoreCase(symbol)) {
+                result.add(card);
+            }
+        }
+        return result;
+    }
+
+    public void displayAllCards() {
+        for (Card card : cards) {
+            System.out.println(card);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        CardCollection collection = new CardCollection();
+
+        collection.addCard("Ace of Spades", "Spade");
+        collection.addCard("Queen of Hearts", "Heart");
+        collection.addCard("King of Diamonds", "Diamond");
+        collection.addCard("Jack of Clubs", "Club");
+
+        System.out.println("Enter a symbol to search for: ");
+        String searchSymbol = scanner.nextLine();
+        List<Card> foundCards = collection.findCardsBySymbol(searchSymbol);
+
+        if (foundCards.isEmpty()) {
+            System.out.println("No cards found with symbol: " + searchSymbol);
+        } else {
+            System.out.println("Cards found:");
+            for (Card card : foundCards) {
+                System.out.println(card);
+            }
+        }
+    }
+}
